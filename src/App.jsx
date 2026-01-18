@@ -2,6 +2,7 @@ import profile from "./assets/profile.jpg";
 import logo from "./assets/logo.png";
 
 
+
 export default function App() {
   // ✅ Agency-style projects with tags + case study
   const projects = [
