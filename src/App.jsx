@@ -1,4 +1,6 @@
 import profile from "./assets/profile.jpg";
+import logo from "./assets/logo.png";
+
 
 export default function App() {
   // ✅ Agency-style projects with tags + case study
@@ -140,12 +142,15 @@ export default function App() {
       {/* NAVBAR (fixed top) */}
       <div className="navbar bg-white/90 backdrop-blur border-b border-gray-100 fixed top-0 left-0 right-0 z-50 px-4 md:px-10">
         <div className="flex-1">
-          <a
-            href="#home"
-            className="text-xl md:text-2xl font-extrabold tracking-tight hover:text-primary transition"
-          >
-            DA | Portfolio
-          </a>
+          <a href="#home" className="flex items-center gap-2">
+  <img
+    src={logo}
+    alt="DA Sultan Portfolio"
+    className="h-20 md:h-26 w-auto hover:opacity-80 transition"
+
+  />
+</a>
+
         </div>
 
         <div className="flex-none">
@@ -182,7 +187,8 @@ export default function App() {
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
-              <a href="#projects" className="btn btn-primary rounded-full btn-lg">
+              <a href="#projects" className="btn btn-primary rounded-full btn-lg text-white bg-primary hover:bg-blue-600
+">
                 View Projects
               </a>
               <a href="#contact" className="btn btn-outline rounded-full btn-lg">
@@ -196,7 +202,7 @@ export default function App() {
             <div className="relative">
               <div className="absolute inset-0 blur-2xl bg-primary/20 rounded-full" />
               <div className="avatar">
-                <div className="w-64 md:w-72 rounded-full ring ring-primary ring-offset-base-100 ring-offset-8 shadow-xl">
+                <div className="w-64 md:w-72 rounded-full ring ring-primary ring-offset-base-100 ring-offset-8 shadow-xl hover:scale-105 translate-x-1 transition">
                   <img src={profile} alt="DA SULTAN" />
                 </div>
               </div>
@@ -387,7 +393,8 @@ export default function App() {
                 </div>
 
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <a href="#contact" className="btn btn-primary rounded-full">
+                  <a href="#contact" className="btn btn-primary rounded-full text-white
+">
                     Hire Me
                   </a>
                   <a href="#projects" className="btn btn-outline rounded-full">
