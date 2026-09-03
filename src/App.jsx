@@ -1,536 +1,1733 @@
+import { useState } from "react";
+import "./App.css";
+
 import profile from "./assets/profile.jpg";
 import logo from "./assets/logo.png";
 
+const EMAIL = "dasultanbusiess@gmail.com";
 
+const WEB3FORMS_ACCESS_KEY =
+  "118615d0-05d0-4a2a-bb28-f045e6b68841";
 
-export default function App() {
-  // ✅ Agency-style projects with tags + case study
-  const projects = [
-    {
-      id: "local-seo-growth",
-      title: "Local Business SEO Growth",
-      desc: "Improved rankings and traffic through technical SEO and backlinks.",
-      tags: ["SEO", "Local SEO"],
-      caseStudy: {
-        overview:
-          "A local service business needed more calls from Google. I focused on fixing technical issues, optimizing pages, and improving local authority.",
-        whatIDid: [
-          "Technical audit (speed, indexing, crawl errors)",
-          "Local keyword research + on-page improvements",
-          "Local citations + quality backlinks",
-          "Weekly tracking + reporting",
-        ],
-        results: [
-          "+70% organic traffic in 3 months (practice case study)",
-          "Top 3 for 5 local keywords (practice case study)",
-          "More calls/leads from search intent pages",
-        ],
-        tools: ["Google Search Console", "GA4", "Ahrefs", "Screaming Frog"],
-      },
-    },
-    {
-      id: "reputation-cleanup",
-      title: "Personal Brand Reputation Cleanup",
-      desc: "Pushed down negative results and promoted positive assets.",
-      tags: ["Reputation", "SEO"],
-      caseStudy: {
-        overview:
-          "A personal brand had negative results on page one. I created positive assets and increased authority to improve search perception.",
-        whatIDid: [
-          "Created positive content plan + branded pages",
-          "Optimized titles/meta + internal linking",
-          "Built authority backlinks to priority assets",
-          "Monitored SERP and adjusted strategy",
-        ],
-        results: [
-          "2 negative results pushed off page 1 (practice case study)",
-          "Positive assets dominating page 1",
-          "Improved brand trust in search",
-        ],
-        tools: ["Google Search", "GA4", "Ahrefs", "Content Calendar"],
-      },
-    },
-    {
-      id: "portfolio-react",
-      title: "Portfolio Website (React)",
-      desc: "Built a modern responsive portfolio using React + Tailwind + daisyUI.",
-      tags: ["Frontend", "React"],
-      caseStudy: {
-        overview:
-          "A clean portfolio site to present skills and projects professionally, with responsive layout and smooth navigation.",
-        whatIDid: [
-          "Designed responsive UI (mobile-first)",
-          "Created reusable sections and components",
-          "Added smooth scrolling and clean structure",
-          "Optimized layout for speed and clarity",
-        ],
-        results: [
-          "Modern UI with responsive layout",
-          "Fast-loading pages",
-          "Professional client-ready design",
-        ],
-        tools: ["React", "Vite", "Tailwind CSS", "daisyUI"],
-      },
-    },
-  ];
+/* =========================================================
+   SERVICES
+========================================================= */
 
-  // ✅ Skills section (card layout like your reference image)
-  const skills = [
-    {
-      title: "Technical SEO",
-      desc: "Audit, site structure, speed optimization, crawl & indexing fixes.",
-      icon: "🛠️",
-    },
-    {
-      title: "On-Page SEO",
-      desc: "Titles, meta descriptions, internal linking, schema basics.",
-      icon: "🧩",
-    },
-    {
-      title: "Keyword Research",
-      desc: "Search intent, keyword mapping, content planning & targeting.",
-      icon: "🔎",
-    },
-    {
-      title: "Content Strategy",
-      desc: "Content briefs, topic clusters, SEO-friendly planning.",
-      icon: "📝",
-    },
-    {
-      title: "Backlinks",
-      desc: "Quality outreach, authority links, safe link building.",
-      icon: "🔗",
-    },
-    {
-      title: "Reputation Management",
-      desc: "SERP cleanup, push positive results, brand trust.",
-      icon: "⭐",
-    },
-    {
-      title: "Google Analytics (GA4)",
-      desc: "Traffic analysis, performance tracking, insights & reporting.",
-      icon: "📊",
-    },
-    {
-      title: "Google Search Console",
-      desc: "Indexing issues, coverage fixes, performance insights.",
-      icon: "📈",
-    },
-    {
-      title: "HTML & CSS",
-      desc: "Clean, responsive, SEO-friendly layouts.",
-      icon: "💻",
-    },
-    {
-      title: "React (Vite)",
-      desc: "Modern UI, components, fast performance.",
-      icon: "⚛️",
-    },
-    {
-      title: "Responsive Design",
-      desc: "Mobile-first, cross-device compatibility.",
-      icon: "📱",
-    },
-    {
-      title: "SEO Reporting",
-      desc: "Clear reporting, tracking and execution-focused strategy.",
-      icon: "📄",
-    },
-  ];
+const services = [
+  {
+    number: "01",
+    title: "Web Design",
+    icon: "✦",
+    short:
+      "Modern websites designed around trust, clarity and customer action.",
+    intro:
+      "I design websites that make a business look credible from the first few seconds.",
+    steps: [
+      "Understand the business and target customers",
+      "Create a clear page structure",
+      "Design a strong visual identity",
+      "Build clear calls-to-action",
+    ],
+    growth:
+      "A better website can help turn more visitors into enquiries by making the business easier to understand, easier to trust and easier to contact.",
+  },
+  {
+    number: "02",
+    title: "Web Development",
+    icon: "⌘",
+    short:
+      "Fast, responsive and functional front-end experiences built for real users.",
+    intro:
+      "I turn designs and business requirements into responsive, functional websites.",
+    steps: [
+      "Build responsive layouts",
+      "Develop interactive components",
+      "Optimise loading and performance",
+      "Test across screen sizes",
+    ],
+    growth:
+      "A fast and easy-to-use website reduces friction and gives potential customers a smoother path from landing on the site to contacting or buying from the business.",
+  },
+  {
+    number: "03",
+    title: "Website Redesign",
+    icon: "↗",
+    short:
+      "Turn an outdated website into a cleaner, stronger and more convincing experience.",
+    intro:
+      "If an existing website feels outdated, confusing or difficult to use, I can restructure and modernise it.",
+    steps: [
+      "Audit the existing website",
+      "Identify usability problems",
+      "Modernise the visual design",
+      "Improve conversion paths",
+    ],
+    growth:
+      "A redesign can improve first impressions, usability and trust while giving existing visitors clearer reasons to enquire or purchase.",
+  },
+  {
+    number: "04",
+    title: "SEO",
+    icon: "⌁",
+    short:
+      "Practical SEO focused on visibility, local search and measurable growth.",
+    intro:
+      "I combine technical website improvements with practical SEO thinking.",
+    steps: [
+      "Technical SEO foundations",
+      "Local search optimisation",
+      "Content and page structure",
+      "Analytics and performance tracking",
+    ],
+    growth:
+      "Better search visibility can bring more qualified visitors to the website, especially when customers are already searching for the services a business provides.",
+  },
+];
 
+/* =========================================================
+   PROJECTS
+========================================================= */
+
+const projects = [
+  {
+    number: "01",
+    category: "LOCAL SERVICE",
+    title: "NorthWest Pro Plumbing",
+    description:
+      "A conversion-focused plumbing website concept built around emergency calls, trust and local enquiries.",
+    tags: ["Web Design", "Local SEO", "Lead Generation"],
+    type: "plumbing",
+    brand: "NW PRO",
+    headline: "Fast help.",
+    headline2: "Trusted locally.",
+    subtext:
+      "Professional plumbing services for Everett & Snohomish County.",
+    button: "CALL NOW",
+    secondaryButton: "OUR SERVICES",
+    phone: "(425) 338-5449",
+    detail:
+      "The concept focuses on helping a local plumbing company communicate its services immediately. The structure prioritises emergency contact actions, service areas, trust signals and clear calls-to-action.",
+  },
+  {
+    number: "02",
+    category: "HEALTHCARE",
+    title: "Oak Dental Studio",
+    description:
+      "A premium dental website concept designed around trust, services and appointment actions.",
+    tags: ["UI Design", "Development", "Conversion"],
+    type: "dental",
+    brand: "OAK DENTAL",
+    headline: "Confident care.",
+    headline2: "Beautifully delivered.",
+    subtext:
+      "Modern dentistry in a comfortable, relaxing environment.",
+    button: "BOOK APPOINTMENT",
+    secondaryButton: "OUR SERVICES",
+    detail:
+      "The concept uses a calm visual system, clear treatment information and strong appointment paths to make the experience feel professional and reassuring.",
+  },
+  {
+    number: "03",
+    category: "HOSPITALITY",
+    title: "The Borough Table",
+    description:
+      "A restaurant website concept designed to make menus, atmosphere and reservations easy to discover.",
+    tags: ["UX Design", "Responsive", "Bookings"],
+    type: "restaurant",
+    brand: "THE BOROUGH TABLE",
+    headline: "Good food.",
+    headline2: "Great moments.",
+    subtext:
+      "Seasonal dishes. Warm atmosphere. Memorable experience.",
+    button: "RESERVE A TABLE",
+    secondaryButton: "VIEW MENU",
+    detail:
+      "The concept combines editorial imagery, strong typography and clear reservation actions to create a premium restaurant experience.",
+  },
+  {
+    number: "04",
+    category: "PROFESSIONAL",
+    title: "Harrison Legal",
+    description:
+      "A professional legal website concept focused on authority, clarity and consultation enquiries.",
+    tags: ["Corporate", "UI Design", "SEO"],
+    type: "legal",
+    brand: "HARRISON LEGAL",
+    headline: "Experience.",
+    headline2: "You can trust.",
+    subtext:
+      "Clear legal guidance from an experienced professional team.",
+    button: "BOOK CONSULTATION",
+    secondaryButton: "OUR SERVICES",
+    detail:
+      "The concept gives visitors fast access to legal services, expertise, contact information and consultation options while maintaining a professional tone.",
+  },
+];
+
+/* =========================================================
+   TECHNOLOGIES
+========================================================= */
+
+const technologies = [
+  {
+    name: "React",
+    icon: "https://cdn.simpleicons.org/react/61DAFB",
+  },
+  {
+    name: "JavaScript",
+    icon: "https://cdn.simpleicons.org/javascript/F7DF1E",
+  },
+  {
+    name: "Node.js",
+    icon: "https://cdn.simpleicons.org/nodedotjs/339933",
+  },
+  {
+    name: "MongoDB",
+    icon: "https://cdn.simpleicons.org/mongodb/47A248",
+  },
+  {
+    name: "Google Analytics",
+    icon: "https://cdn.simpleicons.org/googleanalytics/E37400",
+  },
+  {
+    name: "Search Console",
+    icon: "https://cdn.simpleicons.org/googlesearchconsole/4285F4",
+  },
+  {
+    name: "GitHub",
+    icon: "https://cdn.simpleicons.org/github/111111",
+  },
+  {
+    name: "Vite",
+    icon: "https://cdn.simpleicons.org/vite/646CFF",
+  },
+];
+
+/* =========================================================
+   GITHUB
+========================================================= */
+
+const githubProjects = [
+  {
+    number: "01",
+    title: "DA Sultan Portfolio",
+    description:
+      "My main portfolio built with React and Vite with a focus on modern UI and performance.",
+    tags: ["React", "Vite", "CSS"],
+    image: logo,
+    code: "https://github.com/dasultanbd/da-sultan-portfolio",
+    live: "https://dasultanbd.github.io/da-sultan-portfolio/",
+  },
+  {
+    number: "02",
+    title: "Client Website Concepts",
+    description:
+      "Business-focused website concepts exploring different industries and conversion patterns.",
+    tags: ["React", "JavaScript", "CSS"],
+    image: logo,
+    code: "https://github.com/dasultanbd",
+    live: "#work",
+  },
+  {
+    number: "03",
+    title: "SEO Web Builds",
+    description:
+      "Web development experiments combining technical implementation with practical SEO thinking.",
+    tags: ["SEO", "React", "Analytics"],
+    image: logo,
+    code: "https://github.com/dasultanbd",
+    live: "#services",
+  },
+];
+
+/* =========================================================
+   PROCESS
+========================================================= */
+
+const processSteps = [
+  {
+    number: "01",
+    title: "Discover",
+    text: "Understand the business, audience, competition and goals.",
+  },
+  {
+    number: "02",
+    title: "Plan",
+    text: "Turn the information into a clear sitemap, content and conversion structure.",
+  },
+  {
+    number: "03",
+    title: "Design",
+    text: "Create a polished visual system that feels right for the business.",
+  },
+  {
+    number: "04",
+    title: "Build",
+    text: "Develop the responsive website and make sure important interactions work.",
+  },
+  {
+    number: "05",
+    title: "Launch",
+    text: "Test the site across devices and prepare it for the real world.",
+  },
+  {
+    number: "06",
+    title: "Improve",
+    text: "Use analytics, SEO data and user behaviour to identify improvements.",
+  },
+];
+
+/* =========================================================
+   REALISTIC WEBSITE PREVIEW
+========================================================= */
+
+function ProjectPreview({ project }) {
   return (
-    <div className="min-h-screen bg-white text-base-content">
-      {/* NAVBAR (fixed top) */}
-      <div className="navbar bg-white/90 backdrop-blur border-b border-gray-100 fixed top-0 left-0 right-0 z-50 px-4 md:px-10">
-        <div className="flex-1">
-          <a href="#home" className="flex items-center gap-2">
-  <img
-    src={logo}
-    alt="DA Sultan Portfolio"
-    className="h-20 md:h-26 w-auto hover:opacity-80 transition"
+    <div className={`website-preview preview-${project.type}`}>
 
-  />
-</a>
+      {/* Browser */}
+      <div className="website-browser">
 
+        <div className="browser-controls">
+          <span />
+          <span />
+          <span />
         </div>
 
-        <div className="flex-none">
-          <div className="hidden md:flex gap-2">
-            {["home", "about", "skills", "projects", "contact"].map((id) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                className="btn btn-ghost btn-md text-base font-semibold hover:btn-primary hover:text-primary-content transition"
-              >
-                {id.charAt(0).toUpperCase() + id.slice(1)}
-              </a>
-            ))}
-          </div>
+        <div className="browser-address">
+          {project.type === "plumbing"
+            ? "northwestproplumbing.com"
+            : project.type === "dental"
+            ? "oakdentalstudio.com"
+            : project.type === "restaurant"
+            ? "theboroughtable.com"
+            : "harrisonlegal.com"}
         </div>
+
       </div>
 
-      {/* spacer */}
-      <div className="h-20" />
+      {/* Website navigation */}
+      <div className="mock-nav">
 
-      {/* HOME */}
-      <section id="home" className="px-6 md:px-10 py-16">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-          <div className="text-center md:text-left">
-            <p className="text-lg text-gray-500">Hello, It&apos;s Me</p>
-            <h1 className="text-5xl md:text-6xl font-extrabold mt-2">DA SULTAN</h1>
-            <h2 className="text-2xl md:text-3xl font-semibold mt-3">
-              I&apos;m an <span className="text-primary">SEO Consultant</span> &{" "}
-              <span className="text-primary">Front-End Developer</span>
-            </h2>
-            <p className="mt-5 text-gray-600 leading-relaxed max-w-xl md:max-w-none">
-              Helping brands grow with SEO, reputation management, and clean, responsive websites.
-              Focused on rankings, performance, and long-term growth.
-            </p>
+        <div className="mock-brand">
+          <strong>{project.brand}</strong>
+        </div>
 
-            <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
-              <a href="#projects" className="btn btn-primary rounded-full btn-lg text-white bg-primary hover:bg-blue-600
-">
-                View Projects
-              </a>
-              <a href="#contact" className="btn btn-outline rounded-full btn-lg">
-                Contact
-              </a>
-            </div>
+        <div className="mock-links">
+          <span>Home</span>
+          <span>Services</span>
+          <span>About</span>
+          <span>Contact</span>
+        </div>
+
+        <button className="mock-nav-button">
+          {project.type === "plumbing"
+            ? "CALL NOW"
+            : project.type === "dental"
+            ? "BOOK NOW"
+            : project.type === "restaurant"
+            ? "RESERVE"
+            : "CONSULT"}
+        </button>
+
+      </div>
+
+      {/* Hero */}
+      <div className="mock-hero">
+
+        <div className="mock-hero-copy">
+
+          <small>{project.category}</small>
+
+          <h4>
+            {project.headline}
+            <br />
+            <span>{project.headline2}</span>
+          </h4>
+
+          <p>{project.subtext}</p>
+
+          <div className="mock-buttons">
+            <button>{project.button}</button>
+            <button className="mock-secondary">
+              {project.secondaryButton}
+            </button>
           </div>
 
-          {/* Circle profile */}
-          <div className="flex justify-center md:justify-end">
-            <div className="relative">
-              <div className="absolute inset-0 blur-2xl bg-primary/20 rounded-full" />
-              <div className="avatar">
-                <div className="w-64 md:w-72 rounded-full ring ring-primary ring-offset-base-100 ring-offset-8 shadow-xl hover:scale-105 translate-x-1 transition">
-                  <img src={profile} alt="DA SULTAN" />
-                </div>
+        </div>
+
+        <div className="mock-visual">
+
+          {project.type === "plumbing" && (
+            <>
+              <div className="plumbing-pipe pipe-one" />
+              <div className="plumbing-pipe pipe-two" />
+              <div className="plumbing-tool">
+                <span />
+                <span />
+                <span />
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT (attractive + hover) */}
-      <section id="about" className="px-6 md:px-10 py-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold">
-            About <span className="text-primary">Me</span>
-          </h2>
-
-          <p className="mt-6 text-gray-600 leading-relaxed text-lg">
-            I’m <span className="font-semibold text-gray-900">DA Sultan</span>, an{" "}
-            <span className="font-semibold">SEO Consultant</span> and{" "}
-            <span className="font-semibold">Front-End Developer</span>.
-            I help businesses improve their online visibility with technical SEO, content optimization,
-            and backlinks — and I build modern, responsive websites that are fast, clean, and SEO-friendly.
-          </p>
-
-          <div className="mt-12 grid md:grid-cols-3 gap-6 text-left">
-            {[
-              { title: "SEO Growth", desc: "Improve rankings, traffic & long-term visibility.", icon: "📈" },
-              { title: "Brand Authority", desc: "Build trust through backlinks & reputation.", icon: "⭐" },
-              { title: "Front-End UI", desc: "Fast, responsive, modern interfaces.", icon: "💻" },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="group bg-white rounded-2xl p-8 border border-gray-100
-                           shadow-sm hover:shadow-xl hover:-translate-y-2
-                           transition duration-300 cursor-pointer"
-              >
-                <div className="text-4xl group-hover:scale-110 transition">{item.icon}</div>
-                <h3 className="mt-4 text-xl font-bold group-hover:text-primary transition">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-gray-500 leading-relaxed">{item.desc}</p>
+              <div className="mock-person plumbing-person">
+                <div className="person-head" />
+                <div className="person-body" />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </>
+          )}
 
-      {/* SKILLS (card grid like reference image) */}
-      <section id="skills" className="px-6 md:px-10 py-20 bg-white">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold">
-            Skills <span className="text-primary">Overview</span>
-          </h2>
-          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-            A clean summary of my SEO + Front-End skills in a professional layout.
-          </p>
-
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-            {skills.map((s) => (
-              <div
-                key={s.title}
-                className="bg-white border border-gray-100 rounded-2xl p-8
-                           shadow-sm hover:shadow-lg hover:-translate-y-1
-                           transition cursor-pointer"
-              >
-                <div className="text-4xl">{s.icon}</div>
-                <h3 className="mt-4 text-xl font-bold">{s.title}</h3>
-                <p className="mt-3 text-gray-500 leading-relaxed">{s.desc}</p>
+          {project.type === "dental" && (
+            <>
+              <div className="dental-light" />
+              <div className="dental-chair">
+                <div className="chair-head" />
+                <div className="chair-back" />
+                <div className="chair-seat" />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PROJECTS (Agency style cards + case studies) */}
-      <section id="projects" className="px-6 md:px-10 py-20 bg-base-100">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-extrabold">
-              Projects & <span className="text-primary">Case Studies</span>
-            </h2>
-            <p className="mt-4 opacity-75 max-w-2xl mx-auto">
-              Selected projects demonstrating SEO growth, reputation management,
-              and front-end development skills.
-            </p>
-          </div>
-
-          {/* Project Cards */}
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
-            {projects.map((p) => (
-              <a
-                key={p.id}
-                href={`#case-${p.id}`}
-                className="group bg-white rounded-2xl border border-gray-100 shadow-sm
-                           hover:shadow-xl hover:-translate-y-1 transition p-7 text-left"
-              >
-                <h3 className="text-xl font-bold group-hover:text-primary transition">
-                  {p.title}
-                </h3>
-
-                <p className="mt-2 text-gray-500">{p.desc}</p>
-
-                {/* Tags */}
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {p.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 rounded-full text-xs font-semibold
-                                 bg-gray-100 text-gray-700"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-6 flex items-center justify-between">
-                  <span className="text-primary font-semibold group-hover:underline">
-                    View Case Study →
-                  </span>
-                  <span className="text-xs opacity-50">Click</span>
-                </div>
-              </a>
-            ))}
-          </div>
-
-          {/* Case Study Sections */}
-          <div className="mt-20 space-y-12">
-            {projects.map((p) => (
-              <div
-                key={`case-${p.id}`}
-                id={`case-${p.id}`}
-                className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-10"
-              >
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6">
-                  <div>
-                    <h3 className="text-3xl font-extrabold">{p.title}</h3>
-                    <p className="mt-2 text-gray-500">{p.desc}</p>
-
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {p.tags.map((tag) => (
-                        <span key={tag} className="badge badge-outline badge-lg">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <a href="#projects" className="btn btn-outline rounded-full">
-                    Back to Projects
-                  </a>
-                </div>
-
-                <div className="mt-8 grid md:grid-cols-3 gap-6">
-                  <div className="p-6 rounded-2xl bg-gray-50 border">
-                    <h4 className="font-bold text-lg">Overview</h4>
-                    <p className="mt-2 text-gray-600 leading-relaxed">
-                      {p.caseStudy.overview}
-                    </p>
-                  </div>
-
-                  <div className="p-6 rounded-2xl bg-gray-50 border">
-                    <h4 className="font-bold text-lg">What I Did</h4>
-                    <ul className="mt-3 list-disc list-inside text-gray-600 space-y-2">
-                      {p.caseStudy.whatIDid.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="p-6 rounded-2xl bg-gray-50 border">
-                    <h4 className="font-bold text-lg">Results</h4>
-                    <ul className="mt-3 list-disc list-inside text-gray-600 space-y-2">
-                      {p.caseStudy.results.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-8 p-6 rounded-2xl bg-white border">
-                  <h4 className="font-bold text-lg">Tools Used</h4>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {p.caseStudy.tools.map((tool) => (
-                      <span key={tool} className="badge badge-ghost badge-lg">
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <a href="#contact" className="btn btn-primary rounded-full text-white
-">
-                    Hire Me
-                  </a>
-                  <a href="#projects" className="btn btn-outline rounded-full">
-                    View More Projects
-                  </a>
-                </div>
+              <div className="dental-equipment">
+                <span />
+                <span />
+                <span />
               </div>
-            ))}
-          </div>
+            </>
+          )}
+
+          {project.type === "restaurant" && (
+            <>
+              <div className="restaurant-glow" />
+              <div className="restaurant-plate">
+                <div className="food-center" />
+                <div className="food-detail one" />
+                <div className="food-detail two" />
+                <div className="food-detail three" />
+              </div>
+              <div className="restaurant-glass">
+                <div />
+              </div>
+            </>
+          )}
+
+          {project.type === "legal" && (
+            <>
+              <div className="legal-building">
+                <span />
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className="legal-column column-one" />
+              <div className="legal-column column-two" />
+              <div className="legal-column column-three" />
+            </>
+          )}
+
         </div>
-      </section>
 
-      {/* CONTACT (reference style cards) */}
-<section id="contact" className="px-6 md:px-10 py-20 bg-[#fbf6ee]">
-  <div className="max-w-6xl mx-auto text-center">
-    {/* Heading */}
-    <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight">
-      We are here for you, <br />
-      contact me at <span className="text-primary">anytime</span>
-    </h2>
-
-    <p className="mt-5 text-slate-600 max-w-2xl mx-auto">
-      Have any questions about my services or want to work together?  
-      Feel free to reach out.
-    </p>
-
-    {/* Cards */}
-    <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-      {/* EMAIL */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition p-7">
-        <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-          {/* Mail icon */}
-          <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
-          </svg>
-        </div>
-
-        <h3 className="mt-5 text-lg font-bold text-slate-900">Email</h3>
-        {/* <p className="mt-1 text-sm text-slate-500">From your email app</p> */}
-
-        <p className="mt-4 font-semibold text-slate-900 break-words">
-          <a className="hover:text-primary underline" href="dasultanbusiess@gmail.com">
-            dasultanbusiess@gmail.com
-          </a>
-        </p>
       </div>
 
-      {/* LINKEDIN */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition p-7">
-        <div className="w-14 h-14 rounded-2xl bg-[#0a66c2]/10 flex items-center justify-center">
-          {/* LinkedIn icon */}
-          <svg className="w-7 h-7 text-[#0a66c2]" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H7.351V9h3.414v1.561h.046c.476-.9 1.637-1.852 3.369-1.852 3.6 0 4.268 2.37 4.268 5.455v6.288zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zM6.814 20.452H3.861V9h2.953v11.452z" />
-          </svg>
+      {/* Bottom website section */}
+      <div className="mock-bottom">
+
+        <div>
+          <strong>
+            {project.type === "plumbing"
+              ? "24/7 Emergency Service"
+              : project.type === "dental"
+              ? "Modern dentistry"
+              : project.type === "restaurant"
+              ? "Seasonal menu"
+              : "Trusted legal advice"}
+          </strong>
+
+          <span>
+            {project.type === "plumbing"
+              ? "Fast response across the local area"
+              : project.type === "dental"
+              ? "Care designed around you"
+              : project.type === "restaurant"
+              ? "Thoughtfully prepared every day"
+              : "Professional support when it matters"}
+          </span>
         </div>
 
-        <h3 className="mt-5 text-lg font-bold text-slate-900">LinkedIn</h3>
-        {/* <p className="mt-1 text-sm text-slate-500">View my profile</p> */}
-
-        <p className="mt-4 font-semibold text-slate-900 break-words">
-          <a
-            className="hover:text-primary underline"
-            href="https://www.linkedin.com/in/seo-specialists-bangladesh/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            View Profile
-          </a>
-        </p>
-      </div>
-
-      {/* INSTAGRAM */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition p-7">
-        <div className="w-14 h-14 rounded-2xl bg-pink-500/10 flex items-center justify-center">
-          {/* Instagram icon */}
-          <svg className="w-7 h-7 text-pink-500" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.5-.9a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-          </svg>
+        <div className="mock-bottom-lines">
+          <i />
+          <i />
+          <i />
         </div>
 
-        <h3 className="mt-5 text-lg font-bold text-slate-900">Instagram</h3>
-        {/* <p className="mt-1 text-sm text-slate-500">Send me a DM</p> */}
-
-        <p className="mt-4 font-semibold text-slate-900 break-words">
-          <a
-            className="hover:text-primary underline"
-            href="https://instagram.com/dasultan_seo"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Send me a DM
-          </a>
-        </p>
       </div>
-
-      {/* WHATSAPP */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition p-7">
-        <div className="w-14 h-14 rounded-2xl bg-green-500/10 flex items-center justify-center">
-          {/* WhatsApp icon */}
-          <svg className="w-7 h-7 text-green-500" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.04 2C6.58 2 2.16 6.42 2.16 11.88c0 1.73.45 3.42 1.31 4.92L2 22l5.37-1.41a9.8 9.8 0 0 0 4.67 1.19h.01c5.46 0 9.88-4.42 9.88-9.88C21.93 6.42 17.5 2 12.04 2zm5.73 14.28c-.24.68-1.2 1.25-1.96 1.41-.52.11-1.2.2-3.49-.75-2.93-1.21-4.81-4.19-4.95-4.38-.14-.19-1.19-1.59-1.19-3.04s.76-2.16 1.03-2.46c.27-.3.59-.38.79-.38.2 0 .4 0 .57.01.18.01.42-.07.66.5.24.57.82 2 .89 2.15.07.15.12.33.02.52-.1.2-.15.33-.3.51-.15.18-.32.4-.46.54-.15.15-.3.31-.13.61.17.3.76 1.25 1.63 2.03 1.12 1 2.07 1.31 2.37 1.46.3.15.47.13.65-.08.18-.21.75-.87.95-1.17.2-.3.4-.25.66-.15.27.1 1.69.8 1.98.95.29.15.49.22.56.35.07.13.07.75-.17 1.43z" />
-          </svg>
-        </div>
-
-        <h3 className="mt-5 text-lg font-bold text-slate-900">WhatsApp</h3>
-        {/* <p className="mt-1 text-sm text-slate-500">Chat on WhatsApp</p> */}
-
-        <p className="mt-4 font-semibold text-slate-900 break-words">
-          <a
-            className="hover:text-primary underline"
-            href="https://wa.me/8801640027804"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Chat on WhatsApp
-
-
-          </a>
-        </p>
-      </div>
-    </div>
-
-    {/* Footer Note */}
-    <div className="mt-10 bg-white border border-gray-200 rounded-2xl p-5 text-slate-600">
-      I usually reply within <span className="font-semibold text-slate-900">24 hours</span>.  
-      Available: <span className="font-semibold text-slate-900">everyday</span>.
-    </div>
-
-    <p className="mt-8 text-sm text-slate-500">
-      © 2026 DA SULTAN — All Rights Reserved
-    </p>
-  </div>
-</section>
-
 
     </div>
   );
 }
+
+function App() {
+
+  const [activeService, setActiveService] = useState(null);
+  const [activeProject, setActiveProject] = useState(null);
+  const [activeGithub, setActiveGithub] = useState(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [formStatus, setFormStatus] = useState("");
+
+  const handleInput = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    setFormStatus("sending");
+
+    try {
+      const response = await fetch(
+        "https://api.web3forms.com/submit",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: "New Website Enquiry — DA Sultan Portfolio",
+            from_name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            botcheck: "",
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        setFormStatus("success");
+
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
+  };
+
+  const closeModal = () => {
+    setActiveService(null);
+    setActiveProject(null);
+    setActiveGithub(null);
+  };
+
+  return (
+    <div className="site">
+
+      {/* =====================================================
+          NAVBAR
+      ===================================================== */}
+
+      <header className="navbar-wrap">
+
+        <nav className="navbar">
+
+          <a href="#home" className="brand">
+
+            <div className="brand-logo">
+              <img src={logo} alt="DA Sultan logo" />
+            </div>
+
+            <div className="brand-text">
+              <strong>DA Sultan</strong>
+              <span>WEB · SEO · DIGITAL</span>
+            </div>
+
+          </a>
+
+          <div className="nav-links">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#work">Work</a>
+            <a href="#github">GitHub</a>
+            <a href="#process">Process</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+
+          <a href="#contact" className="nav-cta">
+            Let&apos;s Talk <span>↗</span>
+          </a>
+
+        </nav>
+
+      </header>
+
+      {/* =====================================================
+          HERO
+      ===================================================== */}
+
+      <main>
+
+        <section id="home" className="hero section">
+
+          <div className="hero-bg-word">
+            DIGITAL
+          </div>
+
+          <div className="hero-grid">
+
+            <div className="hero-copy">
+
+              <div className="availability">
+                <span className="availability-dot" />
+                AVAILABLE FOR SELECTED PROJECTS
+              </div>
+
+              <h1>
+                Websites that
+                <br />
+                look <span>premium.</span>
+                <br />
+                Built to
+                <br />
+                <span>perform.</span>
+              </h1>
+
+              <p>
+                I&apos;m DA Sultan — a Web Developer &amp; SEO
+                Consultant helping businesses build modern digital
+                experiences that look trustworthy and turn attention
+                into action.
+              </p>
+
+              <div className="hero-highlights">
+
+                <span>
+                  <b>Web</b> Development
+                </span>
+
+                <span>
+                  <b>UI</b> Design
+                </span>
+
+                <span>
+                  <b>SEO</b> Growth
+                </span>
+
+              </div>
+
+              <div className="hero-buttons">
+
+                <a href="#contact" className="primary-button">
+                  Start a Project <span>↗</span>
+                </a>
+
+                <a href="#work" className="secondary-button">
+                  View My Work <span>↓</span>
+                </a>
+
+              </div>
+
+            </div>
+
+            <div className="hero-visual">
+
+              <div className="hero-orbit orbit-one" />
+              <div className="hero-orbit orbit-two" />
+              <div className="hero-orbit orbit-three" />
+
+              <div className="hero-image-frame">
+
+                <img
+                  src={profile}
+                  alt="DA Sultan"
+                />
+
+              </div>
+
+              <div className="hero-floating floating-digital">
+
+                <span className="floating-icon">
+                  ✦
+                </span>
+
+                <div>
+                  <strong>Digital</strong>
+                  <small>Strategy + Build</small>
+                </div>
+
+              </div>
+
+              <div className="hero-floating floating-build">
+
+                <span className="floating-number">
+                  01
+                </span>
+
+                <div>
+                  <strong>Build</strong>
+                  <small>Measure · Improve</small>
+                </div>
+
+              </div>
+
+              <div className="hero-circle-label">
+                <span>DESIGN</span>
+                <span>DEVELOP</span>
+                <span>GROW</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =====================================================
+            FOCUS TICKER
+        ===================================================== */}
+
+        <section className="focus-ticker">
+
+          <div className="ticker-label">
+            WHAT I FOCUS ON
+          </div>
+
+          <div className="ticker-window">
+
+            <div className="ticker-track">
+
+              {[...Array(2)].flatMap(() => [
+                "Web Development",
+                "UI Design",
+                "SEO",
+                "Local SEO",
+                "Conversion",
+                "Performance",
+                "Analytics",
+                "Responsive",
+                "Growth",
+              ]).map((item, index) => (
+                <span className="ticker-item" key={index}>
+                  {item}
+                  <b>✦</b>
+                </span>
+              ))}
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =====================================================
+            SERVICES
+        ===================================================== */}
+
+        <section id="services" className="section services-section">
+
+          <div className="section-heading">
+
+            <div>
+
+              <div className="section-label">
+                01 / SERVICES
+              </div>
+
+              <h2>
+                What I can
+                <br />
+                <span>build for you.</span>
+              </h2>
+
+            </div>
+
+            <p>
+              Not just a pretty website. I combine design,
+              development and SEO thinking to create a digital
+              experience around your actual business goals.
+            </p>
+
+          </div>
+
+          <div className="services-list">
+
+            {services.map((service) => (
+              <button
+                className="service-row"
+                key={service.number}
+                onClick={() => setActiveService(service)}
+              >
+
+                <span className="service-number">
+                  {service.number}
+                </span>
+
+                <span className="service-icon">
+                  {service.icon}
+                </span>
+
+                <span className="service-content">
+
+                  <strong>{service.title}</strong>
+
+                  <small>{service.short}</small>
+
+                </span>
+
+                <span className="service-arrow">
+                  ↗
+                </span>
+
+              </button>
+            ))}
+
+          </div>
+
+        </section>
+
+        {/* =====================================================
+            PROJECTS
+        ===================================================== */}
+
+        <section id="work" className="section work-section">
+
+          <div className="section-heading">
+
+            <div>
+
+              <div className="section-label">
+                02 / SELECTED WORK
+              </div>
+
+              <h2>
+                Projects
+                <br />
+                <span>with purpose.</span>
+              </h2>
+
+            </div>
+
+            <p>
+              Concept case studies showing how I think about
+              structure, design, usability and business outcomes.
+            </p>
+
+          </div>
+
+          <div className="projects-grid">
+
+            {projects.map((project) => (
+              <article
+                className="project-card"
+                key={project.number}
+                onClick={() => setActiveProject(project)}
+              >
+
+                {/* REALISTIC WEBSITE DESIGN */}
+                <ProjectPreview project={project} />
+
+                <div className="project-info">
+
+                  <div className="project-topline">
+
+                    <span>
+                      {project.category}
+                    </span>
+
+                    <button
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setActiveProject(project);
+                      }}
+                    >
+                      ↗
+                    </button>
+
+                  </div>
+
+                  <h3>
+                    {project.title}
+                  </h3>
+
+                  <p>
+                    {project.description}
+                  </p>
+
+                  <div className="project-tags">
+
+                    {project.tags.map((tag) => (
+                      <span key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+
+                  </div>
+
+                  <div className="project-view">
+                    VIEW CASE STUDY
+                    <span>↗</span>
+                  </div>
+
+                </div>
+
+              </article>
+            ))}
+
+          </div>
+
+        </section>
+
+        {/* =====================================================
+            TOOLKIT
+        ===================================================== */}
+
+        <section className="section toolkit-section">
+
+          <div className="toolkit-layout">
+
+            <div className="toolkit-photo">
+
+              <img
+                src={profile}
+                alt="DA Sultan"
+              />
+
+              <div className="photo-badge">
+
+                <span>03</span>
+
+                <div>
+                  <strong>TECHNICAL</strong>
+                  <small>THINKING</small>
+                </div>
+
+              </div>
+
+              <div className="photo-orbit" />
+
+            </div>
+
+            <div className="toolkit-content">
+
+              <div className="section-label">
+                03 / THE TOOLKIT
+              </div>
+
+              <h2>
+                Technical thinking.
+                <br />
+                <span>Creative execution.</span>
+              </h2>
+
+              <p>
+                I use modern development tools alongside analytics
+                and SEO platforms to build websites that are not
+                only visually strong, but practical and measurable.
+              </p>
+
+              <div className="tech-grid">
+
+                {technologies.map((tech) => (
+                  <div className="tech-card" key={tech.name}>
+
+                    <div className="tech-icon-wrap">
+
+                      <img
+                        src={tech.icon}
+                        alt={tech.name}
+                      />
+
+                    </div>
+
+                    <span>
+                      {tech.name}
+                    </span>
+
+                    <i>↗</i>
+
+                  </div>
+                ))}
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =====================================================
+            PROCESS
+        ===================================================== */}
+
+        <section id="process" className="section process-section">
+
+          <div className="section-heading process-heading">
+
+            <div>
+
+              <div className="section-label">
+                04 / PROCESS
+              </div>
+
+              <h2>
+                From idea
+                <br />
+                <span>to launch.</span>
+              </h2>
+
+            </div>
+
+            <div className="process-intro">
+
+              <div className="process-photo">
+
+                <img
+                  src={profile}
+                  alt="DA Sultan"
+                />
+
+                <div className="process-photo-overlay">
+                  <span>DA</span>
+                  <strong>SULTAN</strong>
+                </div>
+
+              </div>
+
+              <p>
+                A simple process keeps projects focused,
+                transparent and aligned with the result the
+                business actually needs.
+              </p>
+
+            </div>
+
+          </div>
+
+          <div className="process-grid">
+
+            {processSteps.map((step) => (
+              <button
+                className="process-card"
+                key={step.number}
+              >
+
+                <span className="process-number">
+                  {step.number}
+                </span>
+
+                <div className="process-card-arrow">
+                  ↗
+                </div>
+
+                <div className="process-card-body">
+
+                  <h3>{step.title}</h3>
+
+                  <p>{step.text}</p>
+
+                </div>
+
+              </button>
+            ))}
+
+          </div>
+
+        </section>
+
+        {/* =====================================================
+            ABOUT
+        ===================================================== */}
+
+        <section id="about" className="section about-section">
+
+          <div className="about-layout">
+
+            <div className="about-title">
+
+              <div className="section-label">
+                05 / ABOUT
+              </div>
+
+              <h2>
+                A developer
+                <br />
+                who
+                <br />
+                <span>thinks</span>
+                <br />
+                <span>commercially.</span>
+              </h2>
+
+            </div>
+
+            <div className="about-content">
+
+              <div className="about-profile">
+
+                <div className="about-profile-image">
+
+                  <img
+                    src={profile}
+                    alt="DA Sultan"
+                  />
+
+                </div>
+
+                <div className="about-profile-meta">
+
+                  <strong>DA SULTAN</strong>
+
+                  <span>
+                    WEB DEVELOPER · SEO
+                  </span>
+
+                </div>
+
+              </div>
+
+              <h3>
+                I&apos;m interested in the space between technology,
+                design and business.
+              </h3>
+
+              <p>
+                That means I don&apos;t look at a website as just a
+                collection of pages. I look at how someone discovers
+                it, how quickly they understand the offer, why they
+                should trust the business and what makes them take
+                the next step.
+              </p>
+
+              <p>
+                My goal is simple: build digital experiences that
+                look professional, feel effortless and support
+                measurable business growth.
+              </p>
+
+              <a href="#contact" className="about-link">
+                Work with me <span>↗</span>
+              </a>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =====================================================
+            GITHUB
+        ===================================================== */}
+
+        <section id="github" className="github-section">
+
+          <div className="github-inner">
+
+            <div className="github-heading">
+
+              <div>
+
+                <div className="section-label light">
+                  06 / OPEN WORK
+                </div>
+
+                <h2>
+                  Built in public.
+                  <br />
+                  <span>Explore the code.</span>
+                </h2>
+
+              </div>
+
+              <a
+                href="https://github.com/dasultanbd"
+                target="_blank"
+                rel="noreferrer"
+                className="github-main-button"
+              >
+                View Full GitHub
+                <span>↗</span>
+              </a>
+
+            </div>
+
+            <div className="github-grid">
+
+              {githubProjects.map((project) => (
+                <article
+                  className="github-card"
+                  key={project.number}
+                  onClick={() => setActiveGithub(project)}
+                >
+
+                  <div className="github-card-top">
+
+                    <div className="github-mini-logo">
+
+                      <img
+                        src="https://cdn.simpleicons.org/github/FFFFFF"
+                        alt="GitHub"
+                      />
+
+                    </div>
+
+                    <span>
+                      {project.number}
+                    </span>
+
+                  </div>
+
+                  <div className="github-card-image">
+
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                    />
+
+                    <div className="github-image-overlay">
+                      VIEW DETAILS ↗
+                    </div>
+
+                  </div>
+
+                  <h3>
+                    {project.title}
+                  </h3>
+
+                  <p>
+                    {project.description}
+                  </p>
+
+                  <div className="github-tags">
+
+                    {project.tags.map((tag) => (
+                      <span key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+
+                  </div>
+
+                  <div className="github-links">
+
+                    <a
+                      href={project.code}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(event) =>
+                        event.stopPropagation()
+                      }
+                    >
+                      VIEW CODE ↗
+                    </a>
+
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(event) =>
+                        event.stopPropagation()
+                      }
+                    >
+                      LIVE PROJECT ↗
+                    </a>
+
+                  </div>
+
+                </article>
+              ))}
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =====================================================
+            CONTACT
+        ===================================================== */}
+
+        <section id="contact" className="section contact-section">
+
+          <div className="contact-layout">
+
+            <div className="contact-copy">
+
+              <div className="section-label">
+                07 / CONTACT
+              </div>
+
+              <h2>
+                Have a project
+                <br />
+                <span>in mind?</span>
+              </h2>
+
+              <p>
+                Tell me what you&apos;re building, what needs
+                improving or where you want to go next.
+              </p>
+
+              <div className="contact-links">
+
+                <a href={`mailto:${EMAIL}`}>
+                  <span>Email</span>
+                  {EMAIL}
+                  <b>↗</b>
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/in/seo-specialists-bangladesh/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>LinkedIn</span>
+                  Connect with me
+                  <b>↗</b>
+                </a>
+
+                <a
+                  href="https://instagram.com/dasultan_seo"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>Instagram</span>
+                  @dasultan_seo
+                  <b>↗</b>
+                </a>
+
+                <a
+                  href="https://wa.me/8801640027804"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>WhatsApp</span>
+                  Message me
+                  <b>↗</b>
+                </a>
+
+              </div>
+
+            </div>
+
+            <form
+              className="contact-form"
+              onSubmit={handleFormSubmit}
+            >
+
+              <div className="form-top">
+
+                <span>
+                  START A CONVERSATION
+                </span>
+
+                <div className="form-logo">
+                  <img
+                    src={logo}
+                    alt="DA Sultan"
+                  />
+                </div>
+
+              </div>
+
+              <label>
+                Your name
+
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInput}
+                  placeholder="John Smith"
+                  required
+                />
+
+              </label>
+
+              <label>
+                Email address
+
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInput}
+                  placeholder="john@company.com"
+                  required
+                />
+
+              </label>
+
+              <label>
+                Tell me about your project
+
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInput}
+                  placeholder="I need a new website for..."
+                  rows="6"
+                  required
+                />
+
+              </label>
+
+              <button
+                type="submit"
+                className="form-submit"
+                disabled={formStatus === "sending"}
+              >
+
+                {formStatus === "sending"
+                  ? "SENDING..."
+                  : "SEND MESSAGE"}
+
+                <span>↗</span>
+
+              </button>
+
+              {formStatus === "success" && (
+                <div className="form-message success">
+                  Message sent successfully. I&apos;ll get back to
+                  you soon.
+                </div>
+              )}
+
+              {formStatus === "error" && (
+                <div className="form-message error">
+                  Something went wrong. Please try again.
+                </div>
+              )}
+
+            </form>
+
+          </div>
+
+        </section>
+
+      </main>
+
+      {/* =====================================================
+          FOOTER
+      ===================================================== */}
+
+      <footer className="footer">
+
+        <div className="footer-brand">
+
+          <div className="footer-logo">
+            <img
+              src={logo}
+              alt="DA Sultan"
+            />
+          </div>
+
+          <div>
+            <strong>DA Sultan</strong>
+            <span>WEB · SEO · DIGITAL</span>
+          </div>
+
+        </div>
+
+        <div className="footer-center">
+          Building digital experiences with purpose.
+        </div>
+
+        <div className="footer-socials">
+
+          <a
+            href="https://github.com/dasultanbd"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/seo-specialists-bangladesh/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            LinkedIn
+          </a>
+
+          <a
+            href="https://instagram.com/dasultan_seo"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Instagram
+          </a>
+
+        </div>
+
+      </footer>
+
+      {/* =====================================================
+          SERVICE MODAL
+      ===================================================== */}
+
+      {activeService && (
+        <div
+          className="modal-backdrop"
+          onClick={closeModal}
+        >
+
+          <div
+            className="modal"
+            onClick={(event) =>
+              event.stopPropagation()
+            }
+          >
+
+            <button
+              className="modal-close"
+              onClick={closeModal}
+            >
+              ×
+            </button>
+
+            <span className="modal-number">
+              {activeService.number}
+            </span>
+
+            <div className="modal-icon">
+              {activeService.icon}
+            </div>
+
+            <h2>
+              {activeService.title}
+            </h2>
+
+            <p className="modal-intro">
+              {activeService.intro}
+            </p>
+
+            <div className="modal-columns">
+
+              <div>
+
+                <small>
+                  HOW I APPROACH IT
+                </small>
+
+                <ul>
+
+                  {activeService.steps.map((step) => (
+                    <li key={step}>
+                      <span>✓</span>
+                      {step}
+                    </li>
+                  ))}
+
+                </ul>
+
+              </div>
+
+              <div className="modal-growth">
+
+                <small>
+                  HOW IT CAN HELP GROW
+                </small>
+
+                <p>
+                  {activeService.growth}
+                </p>
+
+              </div>
+
+            </div>
+
+            <a
+              href="#contact"
+              className="modal-button"
+              onClick={closeModal}
+            >
+              Discuss this service
+              <span>↗</span>
+            </a>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* =====================================================
+          PROJECT MODAL
+      ===================================================== */}
+
+      {activeProject && (
+        <div
+          className="modal-backdrop"
+          onClick={closeModal}
+        >
+
+          <div
+            className="modal project-modal"
+            onClick={(event) =>
+              event.stopPropagation()
+            }
+          >
+
+            <button
+              className="modal-close"
+              onClick={closeModal}
+            >
+              ×
+            </button>
+
+            <div className="modal-project-image">
+              <ProjectPreview
+                project={activeProject}
+              />
+            </div>
+
+            <span className="modal-category">
+              {activeProject.category}
+            </span>
+
+            <h2>
+              {activeProject.title}
+            </h2>
+
+            <p className="modal-intro">
+              {activeProject.detail}
+            </p>
+
+            <div className="modal-project-tags">
+
+              {activeProject.tags.map((tag) => (
+                <span key={tag}>
+                  {tag}
+                </span>
+              ))}
+
+            </div>
+
+            <a
+              href="#contact"
+              className="modal-button"
+              onClick={closeModal}
+            >
+              Build something similar
+              <span>↗</span>
+            </a>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* =====================================================
+          GITHUB MODAL
+      ===================================================== */}
+
+      {activeGithub && (
+        <div
+          className="modal-backdrop"
+          onClick={closeModal}
+        >
+
+          <div
+            className="modal github-modal"
+            onClick={(event) =>
+              event.stopPropagation()
+            }
+          >
+
+            <button
+              className="modal-close"
+              onClick={closeModal}
+            >
+              ×
+            </button>
+
+            <div className="github-modal-image">
+
+              <img
+                src={activeGithub.image}
+                alt={activeGithub.title}
+              />
+
+            </div>
+
+            <div className="github-modal-heading">
+
+              <div className="github-mini-logo large">
+
+                <img
+                  src="https://cdn.simpleicons.org/github/FFFFFF"
+                  alt="GitHub"
+                />
+
+              </div>
+
+              <span>
+                {activeGithub.number}
+              </span>
+
+            </div>
+
+            <h2>
+              {activeGithub.title}
+            </h2>
+
+            <p className="modal-intro">
+              {activeGithub.description}
+            </p>
+
+            <div className="github-tags">
+
+              {activeGithub.tags.map((tag) => (
+                <span key={tag}>
+                  {tag}
+                </span>
+              ))}
+
+            </div>
+
+            <div className="modal-buttons">
+
+              <a
+                href={activeGithub.code}
+                target="_blank"
+                rel="noreferrer"
+                className="modal-button"
+              >
+                View Code
+                <span>↗</span>
+              </a>
+
+              <a
+                href={activeGithub.live}
+                target="_blank"
+                rel="noreferrer"
+                className="modal-button secondary-modal-button"
+              >
+                Live Project
+                <span>↗</span>
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+    </div>
+  );
+}
+
+export default App;
