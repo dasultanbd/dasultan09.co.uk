@@ -9,12 +9,10 @@
     />
 
     <!-- =====================================================
-         BASIC SEO
+         PRIMARY SEO
     ====================================================== -->
 
-    <title>
-      DA Sultan | Web Developer & SEO Consultant
-    </title>
+    <title>DA Sultan | Web Developer & SEO Consultant</title>
 
     <meta
       name="description"
@@ -31,6 +29,30 @@
     <link
       rel="canonical"
       href="https://dasultan.online/"
+    />
+
+    <!-- =====================================================
+         FAVICON
+         
+         IMPORTANT:
+         public/logo.png must exist.
+    ====================================================== -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/logo.png"
+    />
+
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="/logo.png"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      href="/logo.png"
     />
 
     <!-- =====================================================
@@ -67,6 +89,16 @@
       content="en_GB"
     />
 
+    <meta
+      property="og:image"
+      content="https://dasultan.online/logo.png"
+    />
+
+    <meta
+      property="og:image:alt"
+      content="DA Sultan - Web Developer and SEO Consultant"
+    />
+
     <!-- =====================================================
          TWITTER / X
     ====================================================== -->
@@ -86,8 +118,18 @@
       content="Modern websites, web development and practical SEO solutions for businesses."
     />
 
+    <meta
+      name="twitter:image"
+      content="https://dasultan.online/logo.png"
+    />
+
+    <meta
+      name="twitter:image:alt"
+      content="DA Sultan - Web Developer and SEO Consultant"
+    />
+
     <!-- =====================================================
-         THEME
+         THEME / BROWSER
     ====================================================== -->
 
     <meta
@@ -95,23 +137,13 @@
       content="#ffffff"
     />
 
-    <!-- =====================================================
-         FAVICON
-    ====================================================== -->
-
-    <link
-      rel="icon"
-      type="image/png"
-      href="/logo.png"
-    />
-
-    <link
-      rel="apple-touch-icon"
-      href="/logo.png"
+    <meta
+      name="color-scheme"
+      content="light"
     />
 
     <!-- =====================================================
-         PRECONNECT
+         PERFORMANCE
     ====================================================== -->
 
     <link
@@ -132,6 +164,7 @@
         "jobTitle": "Web Developer & SEO Consultant",
         "description": "Web Developer and SEO Consultant helping businesses build modern websites and improve their online visibility.",
         "email": "mailto:dasultanbusiess@gmail.com",
+        "image": "https://dasultan.online/logo.png",
         "sameAs": [
           "https://github.com/dasultanbd",
           "https://www.linkedin.com/in/seo-specialists-bangladesh/",
@@ -151,17 +184,14 @@
         ]
       }
     </script>
-
   </head>
 
   <body>
-
     <div id="root"></div>
 
     <script
       type="module"
       src="/src/main.jsx"
     ></script>
-
   </body>
 </html>
