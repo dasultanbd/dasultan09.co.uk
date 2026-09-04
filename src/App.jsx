@@ -650,7 +650,7 @@ function App() {
 
                 <img
                   src={profile}
-                  alt="DA Sultan"
+                  alt="DA Sultan - Web Developer and SEO Consultant"
                 />
 
               </div>
