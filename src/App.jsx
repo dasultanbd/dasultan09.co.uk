@@ -2,7 +2,84 @@ import { useState } from "react";
 import "./App.css";
 
 import profile from "./assets/profile.jpg";
-import logo from "./assets/logo.png";
+
+function DALogo({ className = "", size = 100, showCircle = true }) {
+  return (
+    <svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 1000 1000"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="DA Sultan logo"
+    >
+      {showCircle && (
+        <circle
+          cx="500"
+          cy="500"
+          r="482"
+          fill="#ffffff"
+          stroke="#111111"
+          strokeWidth="4"
+        />
+      )}
+
+      <g transform={showCircle ? "translate(0 0)" : "translate(0 -35)"}>
+        <path
+          d="M138 555 C210 520 278 463 342 394 C400 331 451 260 500 174 L500 655"
+          fill="none"
+          stroke="#050505"
+          strokeWidth="30"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+
+        <path
+          d="M165 540 C253 500 340 428 426 336"
+          fill="none"
+          stroke="#050505"
+          strokeWidth="7"
+          strokeLinecap="round"
+        />
+
+        <path
+          d="M285 615 C356 554 425 505 500 468 C566 435 629 413 682 428 C709 436 716 454 698 473 C685 487 671 500 657 515"
+          fill="none"
+          stroke="#050505"
+          strokeWidth="28"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+
+        <path
+          d="M500 468 C420 500 348 557 307 622 C272 677 274 727 311 761 C354 800 427 813 519 811 C663 808 805 768 916 706"
+          fill="none"
+          stroke="#050505"
+          strokeWidth="30"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+
+        <path
+          d="M312 761 C402 810 577 817 739 778 C814 760 876 731 925 695"
+          fill="none"
+          stroke="#050505"
+          strokeWidth="7"
+          strokeLinecap="round"
+        />
+
+        <path
+          d="M500 174 L500 650"
+          fill="none"
+          stroke="#050505"
+          strokeWidth="30"
+          strokeLinecap="square"
+        />
+      </g>
+    </svg>
+  );
+}
 
 const EMAIL = "dasultanbusiess@gmail.com";
 
@@ -214,7 +291,6 @@ const githubProjects = [
     description:
       "My main portfolio built with React and Vite with a focus on modern UI and performance.",
     tags: ["React", "Vite", "CSS"],
-    image: logo,
     code: "https://github.com/dasultanbd/da-sultan-portfolio",
     live: "https://dasultanbd.github.io/da-sultan-portfolio/",
   },
@@ -224,7 +300,6 @@ const githubProjects = [
     description:
       "Business-focused website concepts exploring different industries and conversion patterns.",
     tags: ["React", "JavaScript", "CSS"],
-    image: logo,
     code: "https://github.com/dasultanbd",
     live: "#work",
   },
@@ -234,7 +309,6 @@ const githubProjects = [
     description:
       "Web development experiments combining technical implementation with practical SEO thinking.",
     tags: ["SEO", "React", "Analytics"],
-    image: logo,
     code: "https://github.com/dasultanbd",
     live: "#services",
   },
@@ -544,7 +618,7 @@ function App() {
           <a href="#home" className="brand">
 
             <div className="brand-logo">
-              <img src={logo} alt="DA Sultan logo" />
+              <DALogo size={40} />
             </div>
 
             <div className="brand-text">
@@ -581,9 +655,12 @@ function App() {
 
         <section id="home" className="hero section">
 
-          <div className="hero-bg-word">
-            DIGITAL
-          </div>
+          <DALogo
+            className="hero-logo-bg"
+            size={760}
+            showCircle={false}
+            aria-hidden="true"
+          />
 
           <div className="hero-grid">
 
@@ -682,10 +759,11 @@ function App() {
 
               </div>
 
-              <div className="hero-circle-label">
-                <span>DESIGN</span>
-                <span>DEVELOP</span>
-                <span>GROW</span>
+              <div className="hero-small-mark" aria-hidden="true">
+                <DALogo
+                  size={86}
+                  showCircle={false}
+                />
               </div>
 
             </div>
@@ -1356,10 +1434,7 @@ function App() {
 
                   <div className="github-card-image">
 
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                    />
+                    <DALogo size={125} />
 
                     <div className="github-image-overlay">
                       VIEW DETAILS ↗
@@ -1499,12 +1574,7 @@ function App() {
                 </span>
 
                 <div className="form-logo">
-
-                  <img
-                    src={logo}
-                    alt="DA Sultan"
-                  />
-
+                  <DALogo size={48} />
                 </div>
 
               </div>
@@ -1595,12 +1665,7 @@ function App() {
         <div className="footer-brand">
 
           <div className="footer-logo">
-
-            <img
-              src={logo}
-              alt="DA Sultan"
-            />
-
+            <DALogo size={38} />
           </div>
 
           <div>
@@ -1830,12 +1895,7 @@ function App() {
             </button>
 
             <div className="github-modal-image">
-
-              <img
-                src={activeGithub.image}
-                alt={activeGithub.title}
-              />
-
+              <DALogo size={220} />
             </div>
 
             <div className="github-modal-heading">

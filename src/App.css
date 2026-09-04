@@ -4384,3 +4384,312 @@ img {
   }
 
 }
+
+/* =========================================================
+   DA MONOGRAM HERO BACKGROUND
+   Uses the transparent monogram-only asset and recolours
+   it to the portfolio's primary purple.
+========================================================= */
+
+.hero {
+  isolation: isolate;
+}
+
+.hero-logo-bg {
+  position: absolute;
+  z-index: 0;
+
+  width: min(620px, 55vw);
+  height: auto;
+
+  left: 38%;
+  top: 52%;
+
+  transform: translate(-50%, -50%);
+
+  opacity: 0.055;
+
+  /* Recolour the black monogram to match --primary */
+  filter:
+    brightness(0)
+    saturate(100%)
+    invert(39%)
+    sepia(85%)
+    saturate(2800%)
+    hue-rotate(225deg)
+    brightness(102%)
+    contrast(102%);
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 1100px) {
+  .hero-logo-bg {
+    width: 560px;
+    left: 40%;
+    top: 52%;
+    opacity: 0.05;
+  }
+}
+
+@media (max-width: 850px) {
+  .hero-logo-bg {
+    width: 480px;
+    left: 50%;
+    top: 45%;
+    opacity: 0.045;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-logo-bg {
+    width: 360px;
+    left: 50%;
+    top: 38%;
+    opacity: 0.04;
+  }
+}
+
+/* =========================================================
+   INLINE SVG LOGO SYSTEM
+   Uses the DA logo directly in App.jsx — no logo image file needed.
+========================================================= */
+
+.brand-logo svg,
+.form-logo svg,
+.footer-logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.brand-logo svg {
+  width: 40px;
+  height: 40px;
+}
+
+.form-logo svg {
+  width: 48px;
+  height: 48px;
+}
+
+.footer-logo svg {
+  width: 38px;
+  height: 38px;
+}
+
+.github-card-image > svg {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 125px;
+  height: 125px;
+  transform: translate(-50%, -50%);
+}
+
+.github-modal-image > svg {
+  display: block;
+  width: 220px;
+  height: 220px;
+  margin: 15px auto 0;
+}
+
+.hero-logo-bg {
+  position: absolute;
+  z-index: 0;
+
+  width: min(760px, 58vw);
+  height: auto;
+
+  left: 35%;
+  top: 53%;
+
+  transform: translate(-50%, -50%);
+
+  opacity: 0.055;
+
+  /* Recolour the black monogram to the site's primary purple. */
+  filter:
+    brightness(0)
+    saturate(100%)
+    invert(39%)
+    sepia(91%)
+    saturate(1795%)
+    hue-rotate(220deg)
+    brightness(101%)
+    contrast(101%);
+
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (max-width: 900px) {
+  .hero-logo-bg {
+    width: 480px;
+    left: 50%;
+    top: 42%;
+    opacity: 0.045;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-logo-bg {
+    width: 360px;
+    left: 50%;
+    top: 38%;
+    opacity: 0.035;
+  }
+}
+
+/* =========================================================
+   FINAL HERO LOGO POSITION + VISIBILITY
+   Right-side watermark: brighter and more visible while
+   remaining behind the hero content/photo.
+========================================================= */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-logo-bg {
+  position: absolute;
+  z-index: 0;
+
+  width: min(720px, 62vw);
+  height: auto;
+
+  left: 67%;
+  top: 51%;
+
+  transform: translate(-50%, -50%);
+
+  opacity: 0.105;
+
+  /* Match the existing portfolio purple/blue brand colour. */
+  filter:
+    brightness(0)
+    saturate(100%)
+    invert(39%)
+    sepia(91%)
+    saturate(1850%)
+    hue-rotate(220deg)
+    brightness(103%)
+    contrast(102%)
+    drop-shadow(0 0 28px rgba(99, 91, 255, 0.18));
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-visual {
+  position: relative;
+  z-index: 3;
+}
+
+/* Keep the watermark mostly on the right at medium widths. */
+@media (max-width: 1100px) {
+  .hero-logo-bg {
+    width: 570px;
+    left: 66%;
+    top: 52%;
+    opacity: 0.085;
+  }
+}
+
+@media (max-width: 850px) {
+  .hero-logo-bg {
+    width: 470px;
+    left: 73%;
+    top: 48%;
+    opacity: 0.065;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-logo-bg {
+    width: 350px;
+    left: 73%;
+    top: 43%;
+    opacity: 0.05;
+  }
+}
+
+/* =========================================================
+   HERO SMALL LOGO MARK
+   Small inline SVG mark placed at the lower-right of the
+   hero photo, matching the site's primary purple.
+========================================================= */
+
+.hero-small-mark {
+  position: absolute;
+  z-index: 6;
+
+  right: 70px;
+  bottom: 78px;
+
+  width: 82px;
+  height: 82px;
+
+  display: grid;
+  place-items: center;
+
+  opacity: 0.9;
+
+  filter:
+    brightness(0)
+    saturate(100%)
+    invert(39%)
+    sepia(91%)
+    saturate(1850%)
+    hue-rotate(220deg)
+    brightness(103%)
+    contrast(102%);
+
+  pointer-events: none;
+}
+
+.hero-small-mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 1100px) {
+  .hero-small-mark {
+    right: 48px;
+    bottom: 70px;
+    width: 72px;
+    height: 72px;
+  }
+}
+
+@media (max-width: 850px) {
+  .hero-small-mark {
+    right: 32px;
+    bottom: 58px;
+    width: 64px;
+    height: 64px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-small-mark {
+    right: 18px;
+    bottom: 48px;
+    width: 56px;
+    height: 56px;
+    opacity: 0.8;
+  }
+}
+
