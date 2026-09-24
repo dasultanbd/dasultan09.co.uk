@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 import profile from "./assets/profile.jpg";
@@ -81,7 +81,7 @@ function DALogo({ className = "", size = 100, showCircle = true }) {
   );
 }
 
-const EMAIL = "dasultanbusiess@gmail.com";
+const EMAIL = "info@dasultan.online";
 
 const WEB3FORMS_ACCESS_KEY =
   "118615d0-05d0-4a2a-bb28-f045e6b68841";
@@ -287,21 +287,23 @@ const technologies = [
 const githubProjects = [
   {
     number: "01",
-    title: "DA Sultan Portfolio",
+    title: "Plumbing-site-Concept",
     description:
-      "My main portfolio built with React and Vite with a focus on modern UI and performance.",
+      "My Client Website Concept for a plumbing business, built with React and Vite.",
     tags: ["React", "Vite", "CSS"],
-    code: "https://github.com/dasultanbd/da-sultan-portfolio",
-    live: "https://dasultanbd.github.io/da-sultan-portfolio/",
+    image: "/project-thumbnails/swiftflow-plumbing.png",
+    code: "https://github.com/dasultanbd/Plumber-Client-site",
+    live: "https://dasultanbd.github.io/Plumber-Client-site/",
   },
   {
     number: "02",
-    title: "Client Website Concepts",
+    title: "TravelGo Website Concept",
     description:
-      "Business-focused website concepts exploring different industries and conversion patterns.",
+      "A travel website concept built with React and Vite, designed to showcase destinations and travel packages.",
     tags: ["React", "JavaScript", "CSS"],
-    code: "https://github.com/dasultanbd",
-    live: "#work",
+    image: "/project-thumbnails/TravelGoWebsiteConcept.png",
+    code: "https://github.com/dasultanbd/TravelGo",
+    live: "https://travel-go-phi-teal.vercel.app/",
   },
   {
     number: "03",
@@ -309,8 +311,9 @@ const githubProjects = [
     description:
       "Web development experiments combining technical implementation with practical SEO thinking.",
     tags: ["SEO", "React", "Analytics"],
-    code: "https://github.com/dasultanbd",
-    live: "#services",
+    image: "/project-thumbnails/seo-build.png",
+    code: "https://github.com/dasultanbd/da-digital-agency",
+    live: "https://dasultanbd.github.io/da-digital-agency/",
   },
 ];
 
@@ -534,7 +537,20 @@ function ProjectPreview({ project }) {
   );
 }
 
+function slugify(value) {
+  return value.toLowerCase().trim().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+function getRoute() {
+  const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
+  if (pathname.startsWith("/services/")) return { type: "service", slug: pathname.replace("/services/", "") };
+  if (pathname.startsWith("/projects/")) return { type: "project", slug: pathname.replace("/projects/", "") };
+  return { type: "home", slug: "" };
+}
+
 function App() {
+
+  const [route, setRoute] = useState(getRoute);
 
   const [activeService, setActiveService] = useState(null);
   const [activeProject, setActiveProject] = useState(null);
@@ -547,6 +563,26 @@ function App() {
   });
 
   const [formStatus, setFormStatus] = useState("");
+  const [isWhatsappOpen, setIsWhatsappOpen] = useState(false);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setRoute(getRoute());
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  const navigateTo = (path) => {
+    window.history.pushState({}, "", path);
+    setRoute(getRoute());
+    setActiveService(null);
+    setActiveProject(null);
+    setActiveGithub(null);
+    setIsWhatsappOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const handleInput = (event) => {
     setFormData({
@@ -603,6 +639,34 @@ function App() {
     setActiveProject(null);
     setActiveGithub(null);
   };
+
+  const currentService = route.type === "service"
+    ? services.find((service) => slugify(service.title) === route.slug)
+    : null;
+
+  const currentProject = route.type === "project"
+    ? projects.find((project) => slugify(project.title) === route.slug)
+    : null;
+
+  if (route.type === "service" && currentService) {
+    return (
+      <div className="site inner-site">
+        <SiteNavbar />
+        <ServicePage service={currentService} onNavigate={navigateTo} />
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  if (route.type === "project" && currentProject) {
+    return (
+      <div className="site inner-site">
+        <SiteNavbar />
+        <ProjectCaseStudy project={currentProject} onNavigate={navigateTo} />
+        <SiteFooter />
+      </div>
+    );
+  }
 
   return (
     <div className="site">
@@ -668,24 +732,23 @@ function App() {
 
               <div className="availability">
                 <span className="availability-dot" />
-                AVAILABLE FOR SELECTED PROJECTS
+                WEB DEVELOPER & SEO CONSULTANT
               </div>
 
               <h1>
                 Websites that
                 <br />
-                look <span>premium.</span>
+                <span>Rank on Google.</span>
                 <br />
                 Built to
                 <br />
-                <span>perform.</span>
+                <span>Perform.</span>
               </h1>
 
               <p>
-                I&apos;m DA Sultan — a Web Developer &amp; SEO
-                Consultant helping businesses build modern digital
-                experiences that look trustworthy and turn attention
-                into action.
+                I&apos;m DA Sultan — a Web Developer &amp; SEO Consultant
+                helping businesses build fast, modern websites and
+                improve their Google rankings to get more enquiries and customers.
               </p>
 
               <div className="hero-highlights">
@@ -695,19 +758,30 @@ function App() {
                 </span>
 
                 <span>
-                  <b>UI</b> Design
+                  <b>Website</b> Design
                 </span>
 
                 <span>
-                  <b>SEO</b> Growth
+                  <b>Local</b> SEO
                 </span>
 
               </div>
 
               <div className="hero-buttons">
 
-                <a href="#contact" className="primary-button">
-                  Start a Project <span>↗</span>
+                <a
+                  href="https://wa.me/8801640027804?text=Hi%20DA%20Sultan%2C%20I%27m%20interested%20in%20your%20website%20and%20SEO%20services."
+                  target="_blank"
+                  rel="noreferrer"
+                  className="primary-button whatsapp-button"
+                >
+                  <span className="whatsapp-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20.5 3.5A11.7 11.7 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.1 1.6 5.9L.2 24l6.5-1.7a11.8 11.8 0 0 0 5.4 1.3h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.2-6.1-3.5-8.3Z" fill="currentColor"/>
+                      <path d="M8.5 6.8c-.2-.5-.4-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.5 5.4 4.7 2.7 1.1 3.2.9 3.8.8.6-.1 1.9-.8 2.1-1.6.3-.8.3-1.5.2-1.6-.1-.1-.3-.2-.7-.4-.4-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.4-.8 1-.9 1.2-.2.2-.3.2-.7.1-.4-.2-1.3-.5-2.5-1.6-.9-.8-1.6-1.8-1.8-2.1-.2-.4 0-.5.1-.7.2-.2.4-.5.5-.7.2-.2.2-.4.3-.6.1-.2 0-.5-.1-.7l-.5-1.2Z" fill="white"/>
+                    </svg>
+                  </span>
+                  WhatsApp Me <span>↗</span>
                 </a>
 
                 <a href="#work" className="secondary-button">
@@ -724,11 +798,23 @@ function App() {
               <div className="hero-orbit orbit-two" />
               <div className="hero-orbit orbit-three" />
 
+              <div className="hero-experience-badge">
+                <span>✦</span>
+                <div>
+                  <strong>2+</strong>
+                  <small>Years Experience</small>
+                </div>
+              </div>
+
               <div className="hero-image-frame">
 
                 <img
                   src={profile}
                   alt="DA Sultan - Web Developer and SEO Consultant"
+                  width="470"
+                  height="470"
+                  fetchPriority="high"
+                  decoding="async"
                 />
 
               </div>
@@ -740,8 +826,8 @@ function App() {
                 </span>
 
                 <div>
-                  <strong>Digital</strong>
-                  <small>Strategy + Build</small>
+                  <strong>100+</strong>
+                  <small>SEO Projects</small>
                 </div>
 
               </div>
@@ -749,12 +835,12 @@ function App() {
               <div className="hero-floating floating-build">
 
                 <span className="floating-number">
-                  01
+                  50+
                 </span>
 
                 <div>
-                  <strong>Build</strong>
-                  <small>Measure · Improve</small>
+                  <strong>50+ Websites</strong>
+                  <small>Built &amp; Delivered</small>
                 </div>
 
               </div>
@@ -765,6 +851,73 @@ function App() {
                   showCircle={false}
                 />
               </div>
+
+              <div className="hero-availability-chip">
+                <span className="availability-dot" />
+                Available for new projects
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =====================================================
+            TRUST + TECHNOLOGY STRIP
+        ===================================================== */}
+
+        <section className="trust-strip section" aria-label="Experience and technologies">
+
+          <div className="trust-strip-heading">
+            <span className="trust-line" />
+            <span>BUILT WITH THE TOOLS I USE</span>
+            <span className="trust-line" />
+          </div>
+
+          <div className="trust-panel">
+
+            <div className="trust-metrics">
+
+              <div className="trust-metric">
+                <strong>2+</strong>
+                <span>Years Experience</span>
+              </div>
+
+              <div className="trust-metric">
+                <strong>50+</strong>
+                <span>Websites Built</span>
+              </div>
+
+              <div className="trust-metric">
+                <strong>100+</strong>
+                <span>SEO Projects</span>
+              </div>
+
+              <div className="trust-metric">
+                <strong>8+</strong>
+                <span>Core Tools</span>
+              </div>
+
+            </div>
+
+            <div className="trust-divider" />
+
+            <div className="tech-strip">
+
+              {technologies.map((technology) => (
+                <div className="tech-strip-item" key={technology.name}>
+                  <div className="tech-strip-icon">
+                    <img
+                      src={technology.icon}
+                      alt={`${technology.name} logo`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <span>{technology.name}</span>
+                </div>
+              ))}
 
             </div>
 
@@ -1146,6 +1299,8 @@ function App() {
               <img
                 src={profile}
                 alt="DA Sultan"
+                loading="lazy"
+                decoding="async"
               />
 
               <div className="photo-badge">
@@ -1434,7 +1589,14 @@ function App() {
 
                   <div className="github-card-image">
 
-                    <DALogo size={125} />
+                    <img
+                      src={project.image}
+                      alt={`${project.title} project preview`}
+                      loading="lazy"
+                      onError={(event) => {
+                        event.currentTarget.style.display = "none";
+                      }}
+                    />
 
                     <div className="github-image-overlay">
                       VIEW DETAILS ↗
@@ -1529,7 +1691,7 @@ function App() {
                 </a>
 
                 <a
-                  href="https://www.linkedin.com/in/seo-specialists-bangladesh/"
+                  href="https://www.linkedin.com/in/build-business-dasultan/"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -1539,17 +1701,17 @@ function App() {
                 </a>
 
                 <a
-                  href="https://instagram.com/dasultan_seo"
+                  href="https://instagram.com/dasultan.online"
                   target="_blank"
                   rel="noreferrer"
                 >
                   <span>Instagram</span>
-                  @dasultan_seo
+                  @dasultan.online
                   <b>↗</b>
                 </a>
 
                 <a
-                  href="https://wa.me/8801640027804"
+                  href="https://wa.me/8801640027804?text=Hi%20DA%20Sultan%2C%20I%27m%20interested%20in%20your%20website%20and%20SEO%20services."
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -1657,6 +1819,110 @@ function App() {
       </main>
 
       {/* =====================================================
+          WHATSAPP CHAT WIDGET
+          Closed by default: only the fixed WhatsApp logo + red
+          notification dot are visible. Clicking the logo opens
+          the chat panel. The widget stays fixed while scrolling.
+      ===================================================== */}
+
+      <div className={`whatsapp-widget ${isWhatsappOpen ? "is-open" : ""}`}>
+
+        {isWhatsappOpen && (
+          <div className="whatsapp-chat-card" role="dialog" aria-label="WhatsApp contact">
+
+            <div className="whatsapp-chat-header">
+              <div className="whatsapp-chat-avatar-wrap">
+                <img
+                  src={profile}
+                  alt="DA Sultan"
+                  className="whatsapp-chat-avatar"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className="whatsapp-online-dot" />
+              </div>
+
+              <div className="whatsapp-chat-person">
+                <strong>DA Sultan</strong>
+                <span>Web Developer &amp; SEO Consultant</span>
+                <small>● Online</small>
+              </div>
+
+              <button
+                type="button"
+                className="whatsapp-chat-close"
+                aria-label="Close WhatsApp chat"
+                onClick={() => setIsWhatsappOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="whatsapp-chat-body">
+              <div className="whatsapp-message-bubble">
+                <strong>Hi! 👋</strong>
+                <p>
+                  Need a website, redesign or SEO help?
+                  Let&apos;s talk about your project.
+                </p>
+                <time>Just now</time>
+              </div>
+            </div>
+
+            <div className="whatsapp-chat-footer">
+              <a
+                href="https://wa.me/8801640027804?text=Hi%20DA%20Sultan%2C%20I%27d%20like%20to%20discuss%20a%20website%20or%20SEO%20project."
+                target="_blank"
+                rel="noreferrer"
+                className="whatsapp-chat-button"
+              >
+                <span className="whatsapp-chat-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M20.5 3.5A11.7 11.7 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.1 1.6 5.9L.2 24l6.5-1.7a11.8 11.8 0 0 0 5.4 1.3h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.2-6.1-3.5-8.3Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M8.5 6.8c-.2-.5-.4-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.5 5.4 4.7 2.7 1.1 3.2.9 3.8.8.6-.1 1.9-.8 2.1-1.6.3-.8.3-1.5.2-1.6-.1-.1-.3-.2-.7-.4-.4-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.4-.8 1-.9 1.2-.2.2-.3.2-.7.1-.4-.2-1.3-.5-2.5-1.6-.9-.8-1.6-1.8-1.8-2.1-.2-.4 0-.5.1-.7.2-.2.4-.5.5-.7.2-.2.2-.4.2-.6.1-.2 0-.5-.1-.7l-.5-1.2Z"
+                      fill="white"
+                    />
+                  </svg>
+                </span>
+                Click to start chat
+              </a>
+            </div>
+
+          </div>
+        )}
+
+        <button
+          type="button"
+          className="whatsapp-chat-fab"
+          aria-label={isWhatsappOpen ? "Close WhatsApp chat" : "Open WhatsApp chat"}
+          aria-expanded={isWhatsappOpen}
+          onClick={() => setIsWhatsappOpen((open) => !open)}
+        >
+          <span className="whatsapp-chat-fab-dot" />
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M20.5 3.5A11.7 11.7 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.1 1.6 5.9L.2 24l6.5-1.7a11.8 11.8 0 0 0 5.4 1.3h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.2-6.1-3.5-8.3Z"
+              fill="currentColor"
+            />
+            <path
+              d="M8.5 6.8c-.2-.5-.4-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.5 5.4 4.7 2.7 1.1 3.2.9 3.8.8.6-.1 1.9-.8 2.1-1.6.3-.8.3-1.5.2-1.6-.1-.1-.3-.2-.7-.4-.4-.2-1.9-.9-2.2-1-.3-.1-.5.2-.7.2-.4.2-.8 1-.9 1.2-.2.2-.3.2-.7.1-.4-.2-1.3-.5-2.5-1.6-.9-.8-1.6-1.8-1.8-2.1-.2-.4 0-.5.1-.7.2-.2.4-.5.5-.7.2-.2.2-.4.2-.6.1-.2 0-.5-.1-.7l-.5-1.2Z"
+              fill="white"
+            />
+          </svg>
+        </button>
+
+      </div>
+
+      {/* =====================================================
           FOOTER
       ===================================================== */}
 
@@ -1695,7 +1961,7 @@ function App() {
           </a>
 
           <a
-            href="https://www.linkedin.com/in/seo-specialists-bangladesh/"
+            href="https://www.linkedin.com/in/build-business-dasultan/"
             target="_blank"
             rel="noreferrer"
           >
@@ -1703,7 +1969,7 @@ function App() {
           </a>
 
           <a
-            href="https://instagram.com/dasultan_seo"
+            href="https://instagram.com/dasultan.online"
             target="_blank"
             rel="noreferrer"
           >
@@ -1788,14 +2054,22 @@ function App() {
 
             </div>
 
-            <a
-              href="#contact"
-              className="modal-button"
-              onClick={closeModal}
-            >
-              Discuss this service
-              <span>↗</span>
-            </a>
+            <div className="modal-button-row">
+              <a href="#contact" className="modal-button" onClick={closeModal}>
+                Discuss this service <span>↗</span>
+              </a>
+              <a
+                href={`/services/${slugify(activeService.title)}`}
+                className="modal-button secondary-modal-button"
+                onClick={(event) => {
+                  event.preventDefault();
+                  closeModal();
+                  navigateTo(`/services/${slugify(activeService.title)}`);
+                }}
+              >
+                Full service page <span>→</span>
+              </a>
+            </div>
 
           </div>
 
@@ -1856,14 +2130,22 @@ function App() {
 
             </div>
 
-            <a
-              href="#contact"
-              className="modal-button"
-              onClick={closeModal}
-            >
-              Build something similar
-              <span>↗</span>
-            </a>
+            <div className="modal-button-row">
+              <a href="#contact" className="modal-button" onClick={closeModal}>
+                Build something similar <span>↗</span>
+              </a>
+              <a
+                href={`/projects/${slugify(activeProject.title)}`}
+                className="modal-button secondary-modal-button"
+                onClick={(event) => {
+                  event.preventDefault();
+                  closeModal();
+                  navigateTo(`/projects/${slugify(activeProject.title)}`);
+                }}
+              >
+                Full case study <span>→</span>
+              </a>
+            </div>
 
           </div>
 
@@ -1895,7 +2177,10 @@ function App() {
             </button>
 
             <div className="github-modal-image">
-              <DALogo size={220} />
+              <img
+                src={activeGithub.image}
+                alt={`${activeGithub.title} project preview`}
+              />
             </div>
 
             <div className="github-modal-heading">
@@ -1963,6 +2248,91 @@ function App() {
       )}
 
     </div>
+  );
+}
+
+
+function SiteNavbar() {
+  return (
+    <header className="navbar-wrap">
+      <nav className="navbar">
+        <a href="/" className="brand">
+          <div className="brand-logo"><DALogo size={40} /></div>
+          <div className="brand-text"><strong>DA Sultan</strong><span>WEB · SEO · DIGITAL</span></div>
+        </a>
+        <div className="nav-links">
+          <a href="/#home">Home</a><a href="/#services">Services</a><a href="/#growth">Growth</a><a href="/#work">Work</a><a href="/#github">GitHub</a><a href="/#process">Process</a><a href="/#about">About</a><a href="/#contact">Contact</a>
+        </div>
+        <a href="/#contact" className="nav-cta">Let&apos;s Talk <span>↗</span></a>
+      </nav>
+    </header>
+  );
+}
+
+function SiteFooter() {
+  return (
+    <footer className="footer">
+      <div className="footer-brand"><div className="footer-logo"><DALogo size={38} /></div><div><strong>DA Sultan</strong><span>WEB · SEO · DIGITAL</span></div></div>
+      <div className="footer-center">Building digital experiences with purpose.</div>
+      <div className="footer-socials"><a href="https://github.com/dasultanbd" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/build-business-dasultan/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://instagram.com/dasultan.online" target="_blank" rel="noreferrer">Instagram</a></div>
+    </footer>
+  );
+}
+
+function ServicePage({ service, onNavigate }) {
+  return (
+    <main className="inner-page">
+      <section className="inner-hero">
+        <div className="inner-page-container">
+          <a className="inner-back" href="/">← Back to home</a>
+          <div className="inner-kicker">SERVICE {service.number}</div>
+          <h1>{service.title}<br /><span>built around your goals.</span></h1>
+          <p>{service.intro}</p>
+          <div className="inner-actions"><a href="/#contact" className="inner-primary">Discuss this service ↗</a><a href="/#work" className="inner-secondary">View my work →</a></div>
+        </div>
+      </section>
+      <section className="inner-section inner-white">
+        <div className="inner-page-container">
+          <div className="inner-split">
+            <div><div className="section-label">WHAT I DO</div><h2>A focused service.<br /><span>Not unnecessary extras.</span></h2></div>
+            <p>{service.short}</p>
+          </div>
+          <div className="inner-service-features">
+            {service.steps.map((step, index) => <article key={step} className="inner-feature-card"><span>0{index + 1}</span><h3>{step}</h3><p>A practical part of the {service.title.toLowerCase()} process, planned around usability, clarity and the business objective.</p></article>)}
+          </div>
+        </div>
+      </section>
+      <section className="inner-section inner-light">
+        <div className="inner-page-container"><div className="section-label">BUSINESS IMPACT</div><div className="inner-impact"><h2>Why this matters<br /><span>for the business.</span></h2><p>{service.growth}</p></div></div>
+      </section>
+      <section className="inner-cta"><div className="inner-page-container"><div className="section-label light">READY TO START?</div><h2>Let&apos;s turn the idea<br /><span>into something real.</span></h2><div className="inner-actions"><a href="/#contact" className="inner-primary">Start a conversation ↗</a><button className="inner-secondary inner-button" onClick={() => onNavigate("/")}>Back to portfolio →</button></div></div></section>
+    </main>
+  );
+}
+
+function ProjectCaseStudy({ project, onNavigate }) {
+  return (
+    <main className="inner-page">
+      <section className="inner-hero project-hero">
+        <div className="inner-page-container">
+          <a className="inner-back" href="/">← Back to work</a>
+          <div className="inner-kicker">CASE STUDY · {project.category}</div>
+          <h1>{project.title}<br /><span>project case study.</span></h1>
+          <p>{project.description}</p>
+        </div>
+      </section>
+      <section className="inner-section inner-white">
+        <div className="inner-page-container">
+          <div className="case-preview-wrap"><ProjectPreview project={project} /></div>
+          <div className="case-study-grid">
+            <article><div className="section-label">THE CONCEPT</div><h2>Designed with a <span>clear purpose.</span></h2><p>{project.detail}</p></article>
+            <article><div className="section-label">PROJECT FOCUS</div><div className="case-tags-large">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div><p>The page structure, visual hierarchy and calls-to-action are designed around the audience and the main action the business wants visitors to take.</p></article>
+          </div>
+        </div>
+      </section>
+      <section className="inner-section inner-light"><div className="inner-page-container"><div className="section-label">BREAKDOWN</div><div className="case-breakdown-grid"><div><span>01</span><h3>Structure</h3><p>Clear sections help visitors understand the offer quickly.</p></div><div><span>02</span><h3>Experience</h3><p>Responsive interactions keep the experience usable across devices.</p></div><div><span>03</span><h3>Conversion</h3><p>Important actions are placed where users naturally need them.</p></div><div><span>04</span><h3>SEO thinking</h3><p>Content and page structure can be developed with search visibility in mind.</p></div></div></div></section>
+      <section className="inner-cta"><div className="inner-page-container"><div className="section-label light">LIKE THIS DIRECTION?</div><h2>Build a website<br /><span>for your business.</span></h2><div className="inner-actions"><a href="/#contact" className="inner-primary">Start a conversation ↗</a><button className="inner-secondary inner-button" onClick={() => onNavigate("/")}>View more projects →</button></div></div></section>
+    </main>
   );
 }
 
