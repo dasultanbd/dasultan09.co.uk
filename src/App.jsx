@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-import profile from "./assets/profile.jpg";
+import profile from "./assets/profile.webp";
 
 function DALogo({ className = "", size = 100, showCircle = true }) {
   return (
